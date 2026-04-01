@@ -21,6 +21,7 @@ export default async function Layout({ children }: Args) {
     <RootLayout
       config={import('@payload-config').then(m => m.default)}
       importMap={importMap}
+      // @ts-expect-error Payload v3 type mismatch between handleServerFunctions signature and ServerFunctionClient
       serverFunction={serverFunction}
     >
       {children}
