@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #0d0d0d;
+  --color-text: #f0ede8;
+  --color-muted: #8a8480;
+  --color-accent: #b07d4a;
+  --color-accent-hover: #c8914f;
+  --color-surface: #1a1a1a;
+  --color-border: #2a2a2a;
+
+  --font-heading: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* Richtext (Payload Lexical output) */
+.richtext p { margin-bottom: 0.75rem; }
+.richtext p:last-child { margin-bottom: 0; }
+.richtext h2, .richtext h3 { font-family: var(--font-heading); color: var(--color-text); margin-top: 1rem; margin-bottom: 0.5rem; }
+.richtext strong { color: var(--color-text); font-weight: 600; }
+.richtext ul, .richtext ol { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+.richtext li { margin-bottom: 0.25rem; }

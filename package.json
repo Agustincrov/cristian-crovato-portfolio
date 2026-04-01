@@ -1,0 +1,41 @@
+{
+  "name": "cristian-crovato",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "seed": "node scripts/run.mjs scripts/seed.ts",
+    "reset": "node scripts/run.mjs scripts/reset.ts",
+    "reset:seed": "node scripts/run.mjs scripts/reset.ts && node scripts/run.mjs scripts/seed.ts"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "^3.0.0",
+    "@payloadcms/next": "^3.0.0",
+    "@payloadcms/richtext-lexical": "^3.0.0",
+    "next": "15.2.9",
+    "payload": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sharp": "^0.33.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "tsx": "^4",
+    "eslint": "^8",
+    "eslint-config-next": "15.2.9",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}
