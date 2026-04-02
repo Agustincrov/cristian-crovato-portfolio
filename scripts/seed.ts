@@ -22,8 +22,8 @@ function toRichText(text: string) {
           version: 1,
         },
       ],
-      direction: 'ltr',
-      format: '',
+      direction: 'ltr' as const,
+      format: '' as const,
       indent: 0,
       type: 'root',
       version: 1,
@@ -47,7 +47,7 @@ async function seed() {
     }
 
     // Upload all photos
-    const uploadedPhotos: { image: string | number }[] = []
+    const uploadedPhotos: { image: number }[] = []
     for (const filename of work.images) {
       const imagePath = path.join(__dirname, 'data/images', filename)
       if (!fs.existsSync(imagePath)) {
