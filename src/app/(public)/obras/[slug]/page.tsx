@@ -4,13 +4,10 @@ import { WorkDetail } from '@/features/work-detail/WorkDetail'
 import { getWorkBySlug, getPublishedWorks } from '@/features/gallery/queries'
 import type { Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: Promise<{ slug: string }>
-}
-
-export async function generateStaticParams() {
-  const works = await getPublishedWorks()
-  return works.map((work) => ({ slug: work.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -3,6 +3,8 @@ import { GalleryGrid } from '@/features/gallery/GalleryGrid'
 import { ProfileSidebar } from '@/features/gallery/ProfileSidebar'
 import { getPublishedWorks } from '@/features/gallery/queries'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Obras — Cristian Crovato',
   description: 'Bustos y esculturas de personajes de comics y fantasía disponibles para encargar.',

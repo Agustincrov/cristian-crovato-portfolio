@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { GalleryGrid } from '@/features/gallery/GalleryGrid'
 import { getPublishedWorks } from '@/features/gallery/queries'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   openGraph: {
     title: 'Cristian Crovato — Escultor',
