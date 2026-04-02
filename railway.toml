@@ -3,6 +3,4 @@ dockerfilePath = "docker/next/Dockerfile"
 dockerContext = "."
 
 [deploy]
-healthcheckPath = "/"
-healthcheckTimeout = 60
 restartPolicyType = "on_failure"
