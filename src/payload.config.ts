@@ -28,6 +28,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    // Push schema directly — no migration files needed for a fresh DB
+    push: true,
   }),
   upload: {
     limits: {
