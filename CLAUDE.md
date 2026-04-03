@@ -6,10 +6,11 @@ Portfolio + lead generation site for Argentine sculptor Cristian Crovato. Conver
 ## Tech Stack
 - **Next.js** 15.2.9 (pinned — Payload peer dep requires `>=15.2.9 <15.3.0 || >=15.3.9` etc.)
 - **Payload CMS** v3 (integrated with Next.js, single container)
-- **Database** PostgreSQL 16
+- **Database** PostgreSQL 16 locally / Railway managed PostgreSQL 18 in production
 - **Styling** Tailwind CSS v3
 - **Fonts** Cormorant Garamond (headings) + Inter (body) via next/font
-- **Hosting target** Railway (São Paulo) + Cloudflare CDN
+- **Hosting** Railway (EU West, Amsterdam) — LIVE at `cristian-crovato-portfolio-production.up.railway.app`
+- **CDN** Cloudflare (not yet configured — pending custom domain)
 
 ## Docker Setup
 ```bash
@@ -35,6 +36,7 @@ docker-compose logs next --tail=50
 - `DATABASE_URI` — PostgreSQL connection string
 - `PAYLOAD_SECRET` — Payload auth secret
 - `ARS_PER_USD` — Exchange rate for dual-currency display (e.g. 1160)
+- `NEXT_PUBLIC_SERVER_URL` — Full origin URL (e.g. `http://localhost:3001` locally, production URL on Railway) — used for OG image absolute URLs
 
 ## Key Business Rules
 - All UI copy in **Argentine Spanish**
@@ -106,6 +108,24 @@ config: import('@payload-config')
 - Text: `#f0ede8` (off-white)
 - Accent: `#b07d4a` (copper/bronze)
 - Feel: premium gallery / collectible — not a generic shop
+
+## Production Deployment — Railway
+
+### Critical constraints discovered in deployment
+- **`push: true` does NOT work in production.** Payload's postgres adapter guards `pushDevSchema()` with `NODE_ENV !== 'production'`. It is silently skipped. Tables will NOT be created.
+- **Schema migration:** `scripts/migrate.js` + `scripts/schema.sql` run at container startup via Dockerfile CMD: `/bin/sh -c "node scripts/migrate.js && node server.js"`. The script is idempotent — checks if `payload_migrations` table exists before running.
+- **`payload migrate:create` cannot run** in this project due to the undici/tsx bug (same bug as `generate:types`). If the schema changes, regenerate `scripts/schema.sql` by dumping the local dev DB: `docker-compose exec db pg_dump -U cristian -d crovato --schema-only --no-owner --no-acl`
+- **Static images must be committed to git.** All `public/` static assets must be in the repo — gitignored files never reach the Docker image. Only `public/media/` stays gitignored (runtime upload storage).
+- **`sharp` must be passed to `buildConfig({ sharp, ... })`** in `payload.config.ts`. Installing it is not enough.
+- **All Payload-backed pages need `export const dynamic = 'force-dynamic'`** — otherwise Next.js tries to render them at Docker build time (no DB) and the build fails.
+- **Railway volume** mounted at `/app/public/media` — persists uploaded media across deploys.
+
+### Railway services
+- `cristian-crovato-portfolio` — Next.js + Payload (EU West)
+- `Postgres` — Railway managed PostgreSQL 18
+
+### Railway environment variables (on cristian-crovato-portfolio)
+`DATABASE_URI`, `PAYLOAD_SECRET`, `NODE_ENV=production`, `ARS_PER_USD`, `NEXT_PUBLIC_SERVER_URL`
 
 ## Phase 2 (after launch)
 Meta Ads campaign — bilingual (ES/EN) ad copy, retargeting via Meta Pixel (integrated from start).
