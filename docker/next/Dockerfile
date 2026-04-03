@@ -27,5 +27,8 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 # Payload writes uploaded media here at runtime
 RUN mkdir -p ./public/media
+# Migration script runs at startup to create schema on a fresh database
+COPY scripts/migrate.js ./scripts/migrate.js
+COPY scripts/schema.sql ./scripts/schema.sql
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["/bin/sh", "-c", "node scripts/migrate.js && node server.js"]
