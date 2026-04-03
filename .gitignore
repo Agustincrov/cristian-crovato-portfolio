@@ -21,10 +21,11 @@ media/
 .playwright-mcp/
 .claude/
 
-# Client photos — not for public repos (copyright)
+# Seed script source images (not needed in repo)
 scripts/data/images/
-public/newphoto*.jpeg
-public/cristian-profile.jpg
-public/articulo-*.jpg
-public/proceso-*.jpg
-public/client-*.jpg
+
+# Payload runtime media uploads
+public/media/
+
+# Playwright test artifacts
+test-results/
